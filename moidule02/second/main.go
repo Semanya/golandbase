@@ -12,8 +12,6 @@ type (
 var (
 	first_metr  = 120.4
 	second_metr = 130.0
-	American    AmericanVelocity
-	European    EuropeanVelocity
 )
 
 func main() {
