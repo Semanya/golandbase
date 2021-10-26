@@ -16,9 +16,9 @@ var (
 
 func main() {
 	first_kilometr := EuropeanVelocity((first_metr * 18) / 5)
-	fmt.Print(first_kilometr)
+	fmt.Printf("%.2f", first_kilometr)
 	fmt.Printf(" and has type:  %T\n", first_kilometr)
 	second_milya := AmericanVelocity((second_metr * 18) / (5 * 1.609))
-	fmt.Print(second_milya)
+	fmt.Printf("%.2f", second_milya)
 	fmt.Printf(" and has type:  %T\n", second_milya)
 }
