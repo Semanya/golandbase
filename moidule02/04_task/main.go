@@ -3,33 +3,29 @@ package main
 import "fmt"
 
 func main() {
-	var fighters map[string]map[string][]string = map[string]map[string][]string{
-		"Fedor": {
-			"books":     {"Bibliya", "Uroki memologii", "Kak ne bit' dushnim"},
-			"newsPaper": {"bloomberg", "playboy", "kommersant"},
-		},
-		"Habib": {
-			"books":     {"Karan", "Uroki geografiya 9 klass", "Kak bit' dushnim"},
-			"newsPaper": {"aldgazira", "playboy", "svobodniy Chtototamrstan"},
-		},
-		"Neznaika": {
-			"books":     {},
-			"newsPaper": {},
-		},
-	}
 
-	keys := make([]string, 0, len(fighters))
-	for k := range fighters {
-		keys = append(keys, k)
+	//keys := make(map[string])
+	fighters := make(map[string]map[string][]string)
+	fighters["Fedor"] = map[string][]string{
+		"books":     {"Bibliya", "Uroki memologii", "Kak ne bit' dushnim"},
+		"newsPaper": {"bloomberg", "playboy", "kommersant"},
 	}
-	without := 0
-	for _, v := range keys {
-		izdaniya := fighters[v]
+	fighters["Habib"] = map[string][]string{
+		"books":     {"Karan", "Uroki geografiya 9 klass", "Kak bit' dushnim"},
+		"newsPaper": {"aldgazira", "playboy", "svobodniy Chtototamrstan"},
+	}
+	fighters["Neznaika"] = map[string][]string{
+		"books":     {},
+		"newsPaper": {},
+	}
+	with := 0
+	for k, _ := range fighters {
+		izdaniya := fighters[k]
 		summaIzdanii := len(izdaniya["books"]) + len(izdaniya["newsPaper"])
-		if summaIzdanii == 0 {
-			without = without + 1
+		if summaIzdanii != 0 {
+			with++
 		}
-		fmt.Println("Общее количество изданий у", v, "=", summaIzdanii)
+		fmt.Println("Общее количество изданий у", k, "=", summaIzdanii)
 	}
-	fmt.Println("Количество учеников без изданий на руках =", without)
+	fmt.Println("Количество учеников без изданий на руках =", with)
 }
