@@ -4,7 +4,6 @@ import "fmt"
 
 func main() {
 
-	//keys := make(map[string])
 	fighters := make(map[string]map[string][]string)
 	fighters["Fedor"] = map[string][]string{
 		"books":     {"Bibliya", "Uroki memologii", "Kak ne bit' dushnim"},
