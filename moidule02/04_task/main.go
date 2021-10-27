@@ -18,8 +18,8 @@ func main() {
 		"newsPaper": {},
 	}
 	with := 0
-	for k, _ := range fighters {
-		summaIzdanii := len(fighters[k]["books"]) + len(fighters[k]["newsPaper"])
+	for k, v := range fighters {
+		summaIzdanii := len(v["books"]) + len(v["newsPaper"])
 		if summaIzdanii != 0 {
 			with++
 		}
