@@ -21,7 +21,7 @@ func main() {
 
 func logTime() {
 	defer duration(track("Duration"))
-	writeOnFile(pathin, pathout)
+	wrеOnFile(pathin, pathout)
 }
 
 func track(msg string) (string, time.Time) {
@@ -31,7 +31,7 @@ func track(msg string) (string, time.Time) {
 func duration(msg string, start time.Time) {
 	fmt.Printf("%v: %v\n", msg, time.Since(start))
 }
-func writeOnFile(pathin string, pathout string) {
+func wrеOnFile(pathin string, pathout string) {
 	f, _ := os.Open(pathin)
 	var lines []string
 	s := bufio.NewScanner(f)
