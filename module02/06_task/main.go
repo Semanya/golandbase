@@ -12,25 +12,28 @@ var (
 	pathout      string = "/Users/u19502010/golndbase/golandbase/module02/06_task/06_task_out.txt"
 	i, b         int
 	resultString string
+	start        = time.Now()
 )
 
 func main() {
 	CheckFileExist(pathout)
-	logTime()
+	wrеOnFile(pathin, pathout)
+	defer logTime()
 }
 
 func logTime() {
-	defer duration(track("Duration"))
-	wrеOnFile(pathin, pathout)
+	//	defer duration(track("Duration"))
+	duration := time.Since(start)
+	fmt.Println(duration)
 }
 
-func track(msg string) (string, time.Time) {
-	return msg, time.Now()
-}
+//func track(msg string) (string, time.Time) {
+//	return msg, time.Now()
+//}
 
-func duration(msg string, start time.Time) {
-	fmt.Printf("%v: %v\n", msg, time.Since(start))
-}
+//func duration(msg string, start time.Time) {
+//	fmt.Printf("%v: %v\n", msg, time.Since(start))
+//}
 func wrеOnFile(pathin string, pathout string) {
 	f, _ := os.Open(pathin)
 	var lines []string
