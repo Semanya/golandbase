@@ -7,19 +7,22 @@ import (
 	"strings"
 )
 
+const (
+	workPath = "/Users/u19502010/golndbase/golandbase"
+)
+
 var (
-	pathin  string = "/Users/u19502010/golndbase/golandbase/module02/07_task/07_task_in.txt"
-	pathout string = "/Users/u19502010/golndbase/golandbase/module02/07_task/data_out.txt"
+	pathin  = workPath + "/module02/07_task/07_task_in.txt"
+	pathout = workPath + "/module02/07_task/data_out.txt"
 	result  string
 	i       = 0
 )
 
 func main() {
-	wrеOnFile(pathin, pathout)
-	//	defer reOutFile()
+	parseFile(pathin, pathout)
 }
 
-func wrеOnFile(pathin string, pathout string) {
+func parseFile(pathin string, pathout string) {
 	f, _ := os.Open(pathin)
 	defer f.Close()
 	s := bufio.NewScanner(f)
@@ -28,28 +31,19 @@ func wrеOnFile(pathin string, pathout string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	w := bufio.NewWriter(fo)
 	for s.Scan() {
 		words := strings.Split(s.Text(), "|")
 		i++
 		for _, word := range words {
 			if word == "" {
-				//				dat, _ := os.ReadFile(pathout)
-				//				fmt.Print(string(dat))
+				dat, _ := os.ReadFile(pathout)
+				fmt.Print(string(dat))
 				errMwssage := fmt.Sprintf("parse error: empty field on string %d", i)
-				//				recover(errText)
-				fmt.Println(errMwssage)
+				panic(errMwssage)
 			}
 		}
 
 		result = fmt.Sprintf("Row: %d\nName: %s\nAddress: %s\nCity: %s\n\n\n", i, words[0], words[1], words[2])
-		fmt.Print(result)
-		//w.WriteString(result)
+		fo.WriteString(result)
 	}
-	defer w.Flush()
 }
-
-//func reOutFile() {
-//	dat, _ := os.ReadFile(pathout)
-//	fmt.Print(string(dat))
-//}
