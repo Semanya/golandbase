@@ -22,18 +22,10 @@ func main() {
 }
 
 func logTime() {
-	//	defer duration(track("Duration"))
 	duration := time.Since(start)
 	fmt.Println(duration)
 }
 
-//func track(msg string) (string, time.Time) {
-//	return msg, time.Now()
-//}
-
-//func duration(msg string, start time.Time) {
-//	fmt.Printf("%v: %v\n", msg, time.Since(start))
-//}
 func wrеOnFile(pathin string, pathout string) {
 	f, _ := os.Open(pathin)
 	defer f.Close()
