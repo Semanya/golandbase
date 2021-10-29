@@ -36,12 +36,13 @@ func logTime() {
 //}
 func wrеOnFile(pathin string, pathout string) {
 	f, _ := os.Open(pathin)
+	defer f.Close()
 	var lines []string
 	s := bufio.NewScanner(f)
 	for s.Scan() {
 		lines = append(lines, s.Text())
 	}
-	fo, err := os.OpenFile(pathout, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	fo, err := os.OpenFile(pathout, os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -54,7 +55,6 @@ func wrеOnFile(pathin string, pathout string) {
 	}
 	defer fo.Close()
 	defer fmt.Println("Количество байт", b, "Количество строк", i)
-	defer f.Close()
 	defer w.Flush()
 }
 
