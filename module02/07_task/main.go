@@ -8,14 +8,15 @@ import (
 )
 
 var (
-	pathin       string = "/Users/u19502010/golndbase/golandbase/module02/07_task/07_task_in.txt"
-	pathout      string = "/Users/u19502010/golndbase/golandbase/module02/07_task/data_out.txt"
-	resultString string
-	i            = 0
+	pathin  string = "/Users/u19502010/golndbase/golandbase/module02/07_task/07_task_in.txt"
+	pathout string = "/Users/u19502010/golndbase/golandbase/module02/07_task/data_out.txt"
+	result  string
+	i       = 0
 )
 
 func main() {
 	wrеOnFile(pathin, pathout)
+	//	defer reOutFile()
 }
 
 func wrеOnFile(pathin string, pathout string) {
@@ -28,25 +29,27 @@ func wrеOnFile(pathin string, pathout string) {
 		fmt.Println(err)
 	}
 	w := bufio.NewWriter(fo)
-	//	for s.Scan() {
-	//		resultString = strings.SplitAfter(s.Text(), "|")
-	//		fmt.Println(s.Text())
-	//		fmt.Printf(" and has type: %T\n", s.Text())
-	//        strings.SplitAfterN(s.Text(), "|", 3)
-	//		fmt.Println(strings.SplitAfterN(s.Text(), "|", 3))
-	//		w.WriteString(resultString)
-	//	}
 	for s.Scan() {
 		words := strings.Split(s.Text(), "|")
 		i++
-		fmt.Println("Row:", i)
-		//		fmt.Println(words)
-		//fmt.Printf("Row: %d\n", words)
-		//		fmt.Printf("Row: %d\nName: %s\nAddress: %s\nCity: %s\n\n\n", words)
 		for _, word := range words {
-			//			println(idx)
-			fmt.Printf("is: %s\n", word)
+			if word == "" {
+				//				dat, _ := os.ReadFile(pathout)
+				//				fmt.Print(string(dat))
+				errMwssage := fmt.Sprintf("parse error: empty field on string %d", i)
+				//				recover(errText)
+				fmt.Println(errMwssage)
+			}
 		}
+
+		result = fmt.Sprintf("Row: %d\nName: %s\nAddress: %s\nCity: %s\n\n\n", i, words[0], words[1], words[2])
+		fmt.Print(result)
+		//w.WriteString(result)
 	}
 	defer w.Flush()
 }
+
+//func reOutFile() {
+//	dat, _ := os.ReadFile(pathout)
+//	fmt.Print(string(dat))
+//}
