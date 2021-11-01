@@ -16,3 +16,6 @@ func main()  {
 	fmt.Println(Random())//Вызов функции из пакета wordz
 
 }
+
+
+//sssssssss
