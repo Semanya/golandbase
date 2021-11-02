@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	workPath = "/Users/u19502010/golndbase/golandbase"
+	workPath = "/Users/u19502010/rebrainme/golandbase"
 )
 
 var (

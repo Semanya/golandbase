@@ -24,7 +24,7 @@ func main() {
 func readFile(pathin string) {
 	f, err := os.Open(pathin)
 	if err != nil {
-		panic("Не удалось открыть файл")
+		panic(err)
 	}
 	defer f.Close()
 	s := bufio.NewReader(f)
