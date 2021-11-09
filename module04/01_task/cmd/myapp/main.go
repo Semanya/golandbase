@@ -9,7 +9,7 @@ import (
 const DEFAULT_DISCOUNT = 500
 
 var (
-	price int = 5000
+	price int = 100
 )
 
 func main() {
