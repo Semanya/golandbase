@@ -26,6 +26,9 @@ func CalcPrice(c Customer, cost int) (int, error) {
 		finalePrice = 0
 	} else {
 		finalePrice = cost - m
+		if finalePrice < 0 {
+			finalePrice = 0
+		}
 	}
 	return finalePrice, err
 }
