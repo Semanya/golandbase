@@ -13,13 +13,11 @@ var (
 func main() {
 	cust := internal.NewCustomer("Dmitry", 23, 10000, 400, true)
 
+	startTransactionDynamic(cust)
+
 	cust.CalcDiscount()
 
 	fmt.Printf("%+v\n", cust)
-
-	custt := cust
-
-	startTransactionDynamic(custt)
 
 	rlyprice, err := internal.CalcPrice(cust, price)
 	if err != nil {
