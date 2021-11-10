@@ -32,5 +32,5 @@ func startTransactionDynamic(w interface{}) error {
 	if !ok {
 		return errors.New("Incorrect type")
 	}
-	return errors.New("Type correct")
+	return nil
 }
