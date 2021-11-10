@@ -13,7 +13,7 @@ var (
 func main() {
 	cust := internal.NewCustomer("Dmitry", 23, 10000, 400, true)
 
-	startTransactionDynamic(cust)
+	fmt.Println(startTransactionDynamic(cust))
 
 	cust.CalcDiscount()
 
@@ -30,9 +30,7 @@ func main() {
 func startTransactionDynamic(w interface{}) error {
 	_, ok := w.(internal.Discounter)
 	if !ok {
-		_, err := fmt.Println(errors.New("Incorrect type"))
-		return err
+		return errors.New("Incorrect type")
 	}
-	_, err := fmt.Println("Type correct")
-	return err
+	return errors.New("Type correct")
 }
