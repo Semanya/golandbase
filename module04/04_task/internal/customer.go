@@ -12,10 +12,6 @@ type Customer struct {
 	discount bool
 }
 
-type Discounter interface {
-	CalcDiscount() (int, error)
-}
-
 func (c *Customer) CalcDiscount() (int, error) {
 	if !c.discount {
 		return 0, errors.New("Discount not available")

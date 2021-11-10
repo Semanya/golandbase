@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"myapp/internal"
 )
@@ -10,11 +11,15 @@ var (
 )
 
 func main() {
-	cust := internal.NewCustomer("Dmitry", 23, 10000, 200, true)
+	cust := internal.NewCustomer("Dmitry", 23, 10000, 400, true)
 
 	cust.CalcDiscount()
 
 	fmt.Printf("%+v\n", cust)
+
+	custt := cust
+
+	startTransactionDynamic(custt)
 
 	rlyprice, err := internal.CalcPrice(cust, price)
 	if err != nil {
@@ -22,4 +27,14 @@ func main() {
 	} else {
 		fmt.Printf("%+v\n", rlyprice)
 	}
+}
+
+func startTransactionDynamic(w interface{}) error {
+	_, ok := w.(internal.Discounter)
+	if !ok {
+		_, err := fmt.Println(errors.New("Incorrect type"))
+		return err
+	}
+	_, err := fmt.Println("Type correct")
+	return err
 }
