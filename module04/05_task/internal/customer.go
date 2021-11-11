@@ -1,10 +1,9 @@
 package internal
 
 type Customer struct {
-	Name     string
-	Age      int
-	discount bool
-	*Overduer
+	Name string
+	Age  int
+	Debtor
 }
 
 type Overduer struct {
@@ -12,19 +11,14 @@ type Overduer struct {
 	debt    int
 }
 
-func (c Overduer) WrOffDebt() error {
+func (c *Overduer) WrOffDebt() error {
 	c.debt = 0
 	return nil
 }
 
-func NewCustomer(name string, age int, balance int, debt int, discount bool) *Customer {
-	return &Customer{
-		Name: name,
-		Age:  age,
-		Overduer: &Overduer{
-			balance: balance,
-			debt:    debt},
-		discount: discount,
-	}
+func NewOverduer(balance int, debt int) *Overduer {
+	return &Overduer{
+		balance: balance,
+		debt:    debt}
 
 }

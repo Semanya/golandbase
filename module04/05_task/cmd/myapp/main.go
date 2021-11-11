@@ -6,11 +6,15 @@ import (
 )
 
 func main() {
-	cust := internal.NewCustomer("Dmitry", 23, 10000, 1000, true)
+	over := internal.NewOverduer(10000, 1000)
+	cust := internal.Customer{
+		Name:   "Dmitry",
+		Age:    23,
+		Debtor: over}
 
-	startTransaction(cust)
+	startTransaction(cust.Debtor)
 
-	fmt.Println(cust)
+	fmt.Println(cust.Debtor)
 }
 
 func startTransaction(debtor internal.Debtor) error {
