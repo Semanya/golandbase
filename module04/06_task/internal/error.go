@@ -1,15 +1,16 @@
 package internal
 
+import (
+	"fmt"
+)
+
 type ErrParser struct {
 	message string
+	limit int
+	lastString string
 }
 
 func (e *ErrParser) Error() string {
-	return e.message
-}
-
-type ErrParser2 struct {
-	error
-    limit int
-	message string
+	limitMessage := fmt.Sprintf("%s, limit: %d, last string: %s", e.message, e.limit, e.lastString)
+	return limitMessage
 }
