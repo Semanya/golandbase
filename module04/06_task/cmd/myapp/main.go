@@ -15,27 +15,39 @@ const (
 
 var (
 	pathin         = workPath + "/module04/06_task/08_task_in.txt"
-	result         string
 	i              = 0
-	limit          = 150
-	errType        string
+	limit          = 160
+	// errType        string
 	errExcessLimit = "limit error"
-	errEOF         = "fuck EOF error"
-	errAnother     = "some another error"
+	errEOF         = errors.New("fuck EOF error")
+	// errAnother     = errors.New("some another error")
 )
 
 func main() {
-	readFile(pathin)
-	switch errType{
-	case errExcessLimit:
-		fmt.Println("string count exceed limit, please read another file =) err: ", result)
-	case errEOF:
-		fmt.Println(errType)
-	case errAnother:
-		fmt.Println(errType)
-	default:
-		fmt.Println("No error")
+	err := readFile(pathin)
+	if err != nil {
+		if err == err.(*internal.ErrParser) {
+			// errType = errEOF
+			fmt.Println("string count exceed limit, please read another file =) err: ", err.Error())
+		}
+		if err == errEOF {
+			// errType = errEOF
+			fmt.Println(errEOF)
+		} else {
+			// errType = errAnother
+			fmt.Println(err)
+		}
 	}
+	// switch finalParse{
+	// case finalParse.(*internal.ErrParser):
+	// 	fmt.Println("string count exceed limit, please read another file =) err: ", finalParse.Error())
+	// case errEOF:
+	// 	fmt.Println(errEOF)
+    // case nil:
+	// 	fmt.Println("No error")
+	// default:
+	// 	fmt.Println(finalParse)
+	// }
 }
 
 func readFile(pathin string) error {
@@ -49,28 +61,28 @@ func readFile(pathin string) error {
 		value, err := s.ReadString('\n')
 		i++
 		if i > limit{
-			errType = errExcessLimit
+			// errType = errExcessLimit
 			mylimit := internal.ErrParser{
-				errType,
+				errExcessLimit,
 				limit,
 				value}
-            result = startParse(mylimit)
-			return errors.New(result)
+            // result = startParse(mylimit)
+			// return errors.New(result)
+			return &mylimit
 		}
 		if err != nil {
 			if err == io.EOF {
-				errType = errEOF
-				return errors.New(errType)
-				break
+				// errType = errEOF
+				return errEOF
 			} else {
-				errType = errAnother
-				return errors.New(errType)
+				// errType = errAnother
+				return err
 			}
 		}
 	}
 	return nil
 }
 
-func startParse(mylimit internal.ErrParser) string {
-	return mylimit.Error()
-}
+// func startParse(mylimit internal.ErrParser) string {
+// 	return mylimit.Error()
+// }
