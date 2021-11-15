@@ -25,10 +25,12 @@ func main() {
 	if err != nil {
 		if _, ok := err.(*internal.ErrParser); ok {
 			fmt.Print("string count exceed limit, please read another file =) err: ", err.Error())
+			return
 		} else if err == errEOF {
 			fmt.Println(errEOF)
 		} else {
 			fmt.Println(err)
+			return
 		}
 	}
 }
