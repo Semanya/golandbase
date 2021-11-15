@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	// "myapp/internal"
+	"myapp/internal"
 	"errors"
 )
 
@@ -17,16 +17,28 @@ var (
 	pathin         = workPath + "/module04/06_task/08_task_in.txt"
 	result         string
 	i              = 0
-	limit          = 160
+	limit          = 150
+	errType        string
 	errExcessLimit = "limit error"
+	errEOF         = "fuck EOF error"
+	errAnother     = "some another error"
 )
 
 func main() {
 	readFile(pathin)
-	fmt.Println("string count exceed limit, please read another file =) err: ", result)
+	switch errType{
+	case errExcessLimit:
+		fmt.Println("string count exceed limit, please read another file =) err: ", result)
+	case errEOF:
+		fmt.Println(errType)
+	case errAnother:
+		fmt.Println(errType)
+	default:
+		fmt.Println("No error")
+	}
 }
 
-func readFile(pathin string) {
+func readFile(pathin string) error {
 	f, err := os.Open(pathin)
 	if err != nil {
 		panic(err)
@@ -36,26 +48,29 @@ func readFile(pathin string) {
 	for {
 		value, err := s.ReadString('\n')
 		i++
+		if i > limit{
+			errType = errExcessLimit
+			mylimit := internal.ErrParser{
+				errType,
+				limit,
+				value}
+            result = startParse(mylimit)
+			return errors.New(result)
+		}
 		if err != nil {
-			fmt.Println(blabla(value, i, err))
-			break
+			if err == io.EOF {
+				errType = errEOF
+				return errors.New(errType)
+				break
+			} else {
+				errType = errAnother
+				return errors.New(errType)
+			}
 		}
 	}
-	fmt.Printf("Total strings: %d\n", i)
+	return nil
 }
 
-func blabla(value string, i int, err error) error {
-	switch {
-	case i > limit:
-		// result := internal.ErrParser2{
-		// 	err,
-		// 	limit: limit,
-		// 	message: value}
-		result = fmt.Sprintf("%s, limit: %d, last string: %s", errExcessLimit, limit, value)
-	case err == io.EOF:
-		result = "fuck EOF"
-	default:
-		result = "hz error"
-	}
-	return errors.New(result)
+func startParse(mylimit internal.ErrParser) string {
+	return mylimit.Error()
 }

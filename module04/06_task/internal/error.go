@@ -5,12 +5,12 @@ import (
 )
 
 type ErrParser struct {
-	message string
-	limit int
-	lastString string
+	Message string
+	Limit int
+	LastString string
 }
 
 func (e *ErrParser) Error() string {
-	limitMessage := fmt.Sprintf("%s, limit: %d, last string: %s", e.message, e.limit, e.lastString)
+	limitMessage := fmt.Sprintf("%s, limit: %d, last string: %s", e.Message, e.Limit, e.LastString)
 	return limitMessage
 }
