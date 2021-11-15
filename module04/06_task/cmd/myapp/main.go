@@ -15,42 +15,26 @@ const (
 
 var (
 	pathin         = workPath + "/module04/06_task/08_task_in.txt"
-	i              = 0
-	limit          = 160
-	// errType        string
+	limit          = 150
 	errExcessLimit = "limit error"
 	errEOF         = errors.New("fuck EOF error")
-	// errAnother     = errors.New("some another error")
 )
 
 func main() {
 	err := readFile(pathin)
 	if err != nil {
-		if err == err.(*internal.ErrParser) {
-			// errType = errEOF
-			fmt.Println("string count exceed limit, please read another file =) err: ", err.Error())
-		}
-		if err == errEOF {
-			// errType = errEOF
+		if _, ok := err.(*internal.ErrParser); ok {
+			fmt.Print("string count exceed limit, please read another file =) err: ", err.Error())
+		} else if err == errEOF {
 			fmt.Println(errEOF)
 		} else {
-			// errType = errAnother
 			fmt.Println(err)
 		}
 	}
-	// switch finalParse{
-	// case finalParse.(*internal.ErrParser):
-	// 	fmt.Println("string count exceed limit, please read another file =) err: ", finalParse.Error())
-	// case errEOF:
-	// 	fmt.Println(errEOF)
-    // case nil:
-	// 	fmt.Println("No error")
-	// default:
-	// 	fmt.Println(finalParse)
-	// }
 }
 
 func readFile(pathin string) error {
+    i := 0
 	f, err := os.Open(pathin)
 	if err != nil {
 		panic(err)
@@ -58,31 +42,22 @@ func readFile(pathin string) error {
 	defer f.Close()
 	s := bufio.NewReader(f)
 	for {
-		value, err := s.ReadString('\n')
 		i++
-		if i > limit{
-			// errType = errExcessLimit
+		value, err := s.ReadString('\n')
+		if err != nil {
+			if err == io.EOF {
+				return errEOF
+			} else {
+				return err
+			}
+		}
+		if i > (limit-1){
 			mylimit := internal.ErrParser{
 				errExcessLimit,
 				limit,
 				value}
-            // result = startParse(mylimit)
-			// return errors.New(result)
 			return &mylimit
-		}
-		if err != nil {
-			if err == io.EOF {
-				// errType = errEOF
-				return errEOF
-			} else {
-				// errType = errAnother
-				return err
-			}
 		}
 	}
 	return nil
 }
-
-// func startParse(mylimit internal.ErrParser) string {
-// 	return mylimit.Error()
-// }
