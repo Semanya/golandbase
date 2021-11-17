@@ -24,12 +24,12 @@ func (c *Cache) Set(key string, value int) {
 }
 
 func (c *Cache) Get(key string) int {
-	c.mu.Lock()
-	defer c.mu.Unlock()
 	return c.storage[key]
 }
 
 func (c *Cache) Remove(key string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	delete(c.storage, key)
 }
 
