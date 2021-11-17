@@ -32,11 +32,6 @@ func (c *Cache) Remove(key string) {
 }
 
 func main() {
-	// months := map[string]int{
-	// 	"Jan": 31,
-	// 	"Feb": 28,
-	// 	"Mar": 31,
-	//   }
 	months := &Cache{
 		storage: map[string]int{
 			"Jan": 31,
