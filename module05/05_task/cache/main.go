@@ -1,6 +1,7 @@
 package main
 
 import (
+	"time"
 	"sync"
 	"fmt"
 )
@@ -14,6 +15,14 @@ type Cache struct {
 	storage map[string]int
 	mu         sync.RWMutex
 }
+
+// type semaphore struct {
+// 	chann chan struct {}
+// }
+
+// func NewSemaphore(tickets int) Semaphore{
+// 	return &semaphore{chann: make(chan struct{}, tickets)}
+// }
 
 func (c *Cache) Increase(key string, value int) {
 	c.mu.Lock()
@@ -41,23 +50,36 @@ func (c *Cache) Remove(key string) {
 
 func main() {
 	cache := Cache{storage: make(map[string]int)}
-	var wg sync.WaitGroup
+	semaphore := make(chan int, 5)
 	for i := 0; i < 10; i++ {
-		wg.Add(1)
+		semaphore <- i
 		go func() {
-			defer wg.Done()
-			cache.Increase(k1, step)
+			defer func() {
+				<-semaphore
+			}()
+		cache.Increase(k1, step)
+		fmt.Println(cache.Get(k1))
+		time.Sleep(time.Millisecond * 1000)
 		}()
+	}
+	for len(semaphore) > 0 {
+		time.Sleep(time.Millisecond * 10)
 	}
 
 	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		i := i // copy variable
-		go func() {
-			defer wg.Done()
-			cache.Set(k1, step*i)
-		}()
+	i := i // copy variable
+	semaphore <- i
+	go func() {
+		defer func() {
+			<-semaphore
+		    }()
+	 	cache.Set(k1, step*i)
+	 	fmt.Println(cache.Get(k1))
+	  	time.Sleep(time.Millisecond * 1000)
+	}()
 	}
-	wg.Wait()
-	fmt.Println(cache.Get(k1))
+	for len(semaphore) > 0 {
+	  	time.Sleep(time.Millisecond * 10)
+	  }
+
 }
