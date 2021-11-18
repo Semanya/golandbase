@@ -16,14 +16,6 @@ type Cache struct {
 	mu         sync.RWMutex
 }
 
-// type semaphore struct {
-// 	chann chan struct {}
-// }
-
-// func NewSemaphore(tickets int) Semaphore{
-// 	return &semaphore{chann: make(chan struct{}, tickets)}
-// }
-
 func (c *Cache) Increase(key string, value int) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
