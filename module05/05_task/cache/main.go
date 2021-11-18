@@ -51,7 +51,7 @@ func main() {
 			}()
 		cache.Increase(k1, step)
 		fmt.Println(cache.Get(k1))
-		time.Sleep(time.Millisecond * 1000)
+		// time.Sleep(time.Millisecond * 1000)
 		}()
 	}
 	for len(semaphore) > 0 {
@@ -67,7 +67,7 @@ func main() {
 		    }()
 	 	cache.Set(k1, step*i)
 	 	fmt.Println(cache.Get(k1))
-	  	time.Sleep(time.Millisecond * 1000)
+	  	// time.Sleep(time.Millisecond * 1000)
 	}()
 	}
 	for len(semaphore) > 0 {
