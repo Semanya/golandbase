@@ -1,10 +1,10 @@
 package main
 
 import (
-	"time"
-	"sync"
-	"fmt"
 	"context"
+	"fmt"
+	"sync"
+	"time"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 
 type Cache struct {
 	storage map[string]int
-	mu         sync.RWMutex
+	mu      sync.RWMutex
 }
 
 func (c *Cache) Increase(key string, value int) {
@@ -42,55 +42,50 @@ func (c *Cache) Remove(key string) {
 }
 
 func main() {
-	ctx, _ := context.WithTimeout(context.Background(), time.Millisecond*100)
+	ctx, _ := context.WithTimeout(context.Background(), time.Millisecond*3000)
 	cache := Cache{storage: make(map[string]int)}
 	semaphore := make(chan int, 5)
-	L:
-	for i := 0; i < 50; i++ {
+	for i := 0; i < 10; i++ {
 		select {
-		case semaphore <- i:
-		    go func() {
-			    defer func() {
-			    	<-semaphore
-			    }()
-		    cache.Increase(k1, step)
-		    fmt.Println(cache.Get(k1))
-		    // time.Sleep(time.Millisecond * 10)
-		}()
-	    case <-ctx.Done():
-			fmt.Println("go go break L")
-			break L
+		case <-ctx.Done():
+			fmt.Println("its Done")
+			return
 		default:
-			fmt.Println("Waiting")
-			time.Sleep(time.Millisecond * 10)
+			semaphore <- i
+			go func() {
+				defer func() {
+					<-semaphore
+				}()
+				cache.Increase(k1, step)
+				fmt.Println(cache.Get(k1))
+				time.Sleep(time.Millisecond * 1000)
+			}()
+		}
 	}
-}
 	for len(semaphore) > 0 {
 		time.Sleep(time.Millisecond * 10)
 	}
 
-	LL:
-	for i := 0; i < 50; i++ {
-	i := i // copy variable
-	    select {
-	    case semaphore <- i:
-	    go func() {
-		    defer func() {
-		    	<-semaphore
-		        }()
-	 	cache.Set(k1, step*i)
-	 	fmt.Println(cache.Get(k1))
-	  	// time.Sleep(time.Millisecond * 100)
-	}()
-    case <-ctx.Done():
-		fmt.Println("go go break LL")
-	    break LL
-    default:
-	    time.Sleep(time.Millisecond * 10)
+	for i := 0; i < 10; i++ {
+		i := i // copy variable
+		select {
+		case <-ctx.Done():
+			fmt.Println("its Done 2")
+			return
+		default:
+			semaphore <- i
+			go func() {
+				defer func() {
+					<-semaphore
+				}()
+				cache.Set(k1, step*i)
+				fmt.Println(cache.Get(k1))
+				time.Sleep(time.Millisecond * 1000)
+			}()
+		}
 	}
-}
 	for len(semaphore) > 0 {
-	  	time.Sleep(time.Millisecond * 10)
-	  }
+		time.Sleep(time.Millisecond * 10)
+	}
 
 }
