@@ -4,6 +4,7 @@ import (
 	"time"
 	"sync"
 	"fmt"
+	"context"
 )
 
 const (
@@ -41,35 +42,53 @@ func (c *Cache) Remove(key string) {
 }
 
 func main() {
+	ctx, _ := context.WithTimeout(context.Background(), time.Millisecond*100)
 	cache := Cache{storage: make(map[string]int)}
 	semaphore := make(chan int, 5)
-	for i := 0; i < 10; i++ {
-		semaphore <- i
-		go func() {
-			defer func() {
-				<-semaphore
-			}()
-		cache.Increase(k1, step)
-		fmt.Println(cache.Get(k1))
-		time.Sleep(time.Millisecond * 1000)
+	L:
+	for i := 0; i < 50; i++ {
+		select {
+		case semaphore <- i:
+		    go func() {
+			    defer func() {
+			    	<-semaphore
+			    }()
+		    cache.Increase(k1, step)
+		    fmt.Println(cache.Get(k1))
+		    // time.Sleep(time.Millisecond * 10)
 		}()
+	    case <-ctx.Done():
+			fmt.Println("go go break L")
+			break L
+		default:
+			fmt.Println("Waiting")
+			time.Sleep(time.Millisecond * 10)
 	}
+}
 	for len(semaphore) > 0 {
 		time.Sleep(time.Millisecond * 10)
 	}
 
-	for i := 0; i < 10; i++ {
+	LL:
+	for i := 0; i < 50; i++ {
 	i := i // copy variable
-	semaphore <- i
-	go func() {
-		defer func() {
-			<-semaphore
-		    }()
+	    select {
+	    case semaphore <- i:
+	    go func() {
+		    defer func() {
+		    	<-semaphore
+		        }()
 	 	cache.Set(k1, step*i)
 	 	fmt.Println(cache.Get(k1))
-	  	time.Sleep(time.Millisecond * 1000)
+	  	// time.Sleep(time.Millisecond * 100)
 	}()
+    case <-ctx.Done():
+		fmt.Println("go go break LL")
+	    break LL
+    default:
+	    time.Sleep(time.Millisecond * 10)
 	}
+}
 	for len(semaphore) > 0 {
 	  	time.Sleep(time.Millisecond * 10)
 	  }
