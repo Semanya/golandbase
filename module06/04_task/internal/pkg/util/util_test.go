@@ -10,19 +10,17 @@ type testpair struct {
 	currect bool
 }
 
-var tests = map[string]testpair{
-	"1 case": {[]int{123, 321, 331231, 2321}, false},
-	"2 case": {[]int{-649, -946, -233121, -3213}, false},
-	"3 case": {[]int{-64, 46, 3121, 213}, false},
+var tests = []testpair{
+	{[]int{123, 321, 331231, 2321}, false},
+	{[]int{-649, -946, -233121, -3213}, false},
+	{[]int{-64, 46, 3121, 213}, false},
 }
 
 func TestContainsDuplicate(t *testing.T) {
 	req := require.New(t)
-	for name, pair := range tests {
-		t.Run(name, func(t *testing.T) {
-			v := ContainsDuplicate(pair.check)
-			req.Equal(v, pair.currect)
-		})
+	for _, pair := range tests {
+		v := ContainsDuplicate(pair.check)
+		req.Equal(v, pair.currect)
 	}
 
 }
