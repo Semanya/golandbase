@@ -6,20 +6,21 @@ import (
 )
 
 type testpair struct {
-	check []int
+	check   []int
+	currect bool
 }
 
 var tests = []testpair{
-	{[]int{123, 321, 331231, 2321}},
-	{[]int{-649, -946, -233121, -3213}},
-	{[]int{-64, 46, 3121, 213}},
+	{[]int{123, 321, 331231, 2321}, false},
+	{[]int{-649, -946, -233121, -3213}, false},
+	{[]int{-64, 46, 3121, 213}, false},
 }
 
 func TestContainsDuplicate(t *testing.T) {
 	req := require.New(t)
 	for _, pair := range tests {
 		v := ContainsDuplicate(pair.check)
-		req.Equal(v, false)
+		req.Equal(v, pair.currect)
 	}
 
 }
