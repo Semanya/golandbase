@@ -22,10 +22,10 @@ func PlusOne(s *Counter) {
 
 func BenchmarkWithoutPool(b *testing.B) {
 	var s *Counter
-	s = &Counter{A: 1, B: 2}
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < 100; j++ {
 			// b.StopTimer()
+			s = &Counter{A: 1, B: 2}
 			PlusOne(s)
 			// b.StartTimer()
 		}
