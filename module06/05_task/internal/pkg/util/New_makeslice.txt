@@ -1,0 +1,11 @@
+goos: darwin
+goarch: amd64
+pkg: app/internal/pkg/util
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkMakeSlice-12    	     218	   5411431 ns/op	24002578 B/op	       1 allocs/op
+BenchmarkMakeSlice-12    	     242	   4824122 ns/op	24002570 B/op	       1 allocs/op
+BenchmarkMakeSlice-12    	     236	   5003514 ns/op	24002564 B/op	       1 allocs/op
+BenchmarkMakeSlice-12    	     252	   4887662 ns/op	24002565 B/op	       1 allocs/op
+BenchmarkMakeSlice-12    	     247	   4874470 ns/op	24002565 B/op	       1 allocs/op
+PASS
+ok  	app/internal/pkg/util	8.629s
