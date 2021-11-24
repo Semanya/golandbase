@@ -1,0 +1,11 @@
+goos: darwin
+goarch: amd64
+pkg: app/internal/pkg/util
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkFib-12    	      28	  39349356 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFib-12    	      30	  39375529 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFib-12    	      30	  39419954 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFib-12    	      30	  39284937 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFib-12    	      30	  39434805 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	app/internal/pkg/util	7.269s
