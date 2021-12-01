@@ -1,0 +1,10 @@
+# Это простой пример шаблона! Можете изменить и дополнить шаблон по вашему усматрению.
+
+service:
+  name: etcd-druid
+  port: 9090
+  replicaset: 3
+
+  container:
+    image: "eu.gcr.io/gardener-project/gardener/etcd-druid:v0.5.2:prod"
+    env_file: /tmp/test
