@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+type Monitor interface {
+	Type() string
+	Run() error
+}
+
 const EnvironmentMonitorType = "monitor_type_simple"
 
 type simpleMonitor struct {
