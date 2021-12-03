@@ -1,0 +1,10 @@
+package {{ .Packeganame }}
+
+func StructToMap(c {{ .StrName }}) map[string]interface{} {
+	out := make(map[string]interface{})
+    {{- range $value := .Fff }}
+    out["{{ $value }}"] = c.{{ $value }}
+    {{- end }} 
+    return out
+}
+
