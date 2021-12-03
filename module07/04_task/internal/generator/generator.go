@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"app/internal/config"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -45,26 +44,26 @@ func MarshallerGenerator(marshallerTemplate string, structName string, inFilePat
 		panic(err)
 	}
 
-	vvv := &config.Config{
-		Name:        "aaa",
-		Host:        "bbb",
-		Port:        123,
-		Environment: map[string]string{"bacon": "delicious"},
-		Volumes:     []string{"a", "b", "c", "d", "e", "f", "g"},
-	}
+	// vvv := &config.Config{
+	// 	Name:        "aaa",
+	// 	Host:        "bbb",
+	// 	Port:        123,
+	// 	Environment: map[string]string{"bacon": "delicious"},
+	// 	Volumes:     []string{"a", "b", "c", "d", "e", "f", "g"},
+	// }
 
 	type sss struct {
 		Packeganame string
-		Structura   *config.Config
-		Fff         []string
-		StrName     string
+		// Structura   *config.Config
+		Fff     []string
+		StrName string
 	}
 
 	svsv := &sss{
 		Packeganame: paket,
-		Structura:   vvv,
-		Fff:         Imya,
-		StrName:     structName,
+		// Structura:   vvv,
+		Fff:     Imya,
+		StrName: structName,
 	}
 
 	outFile, err := os.Create(outFilePath)

@@ -1,6 +1,6 @@
 package config
 
-func StructToMap(c Config) map[string]interface{} {
+func (c Config) StructToMap() map[string]interface{} {
 	out := make(map[string]interface{})
     out["Name"] = c.Name
     out["Host"] = c.Host

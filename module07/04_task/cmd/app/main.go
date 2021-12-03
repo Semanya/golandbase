@@ -1,9 +1,9 @@
 package main
 
 import (
-	"app/internal/generator"
 	"fmt"
 	"io/ioutil"
+	"module07/internal/generator"
 )
 
 // func Task03() {

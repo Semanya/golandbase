@@ -1,7 +1,7 @@
 package config
 
 import (
-	"app/internal/convertor"
+	"module07/internal/convertor"
 	"testing"
 )
 
@@ -13,9 +13,9 @@ var simple = Config{
 	Volumes:     []string{"a", "b", "c", "d", "e", "f", "g"},
 }
 
-func BenchmarkStructToMap(b *testing.B) {
+func Benchmark2StructToMap(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		StructToMap(simple)
+		simple.StructToMap()
 	}
 }
 
